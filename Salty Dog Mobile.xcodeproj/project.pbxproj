@@ -10,9 +10,22 @@
 		2C803C302F4D54B700CC7563 /* Salty Dog Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salty Dog Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2C803CA12F4D56B300CC7563 /* Exceptions for "Salty Dog Mobile" folder in "Salty Dog Mobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2C803C2F2F4D54B700CC7563 /* Salty Dog Mobile */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2C803C322F4D54B700CC7563 /* Salty Dog Mobile */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2C803CA12F4D56B300CC7563 /* Exceptions for "Salty Dog Mobile" folder in "Salty Dog Mobile" target */,
+			);
 			path = "Salty Dog Mobile";
 			sourceTree = "<group>";
 		};

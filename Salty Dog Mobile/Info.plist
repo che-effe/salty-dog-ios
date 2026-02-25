@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Location Usage Descriptions (Required for App Store) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>SaltyDog uses your location to display real-time speed, heading, and track your sailing route.</string>
+	
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>SaltyDog uses your location in the background to continue tracking your route while sailing.</string>
+	
+	<!-- Background Modes -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+	
+	<!-- Supported Orientations -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	
+	<!-- App Transport Security (Allow HTTPS only) -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
+	
+	<!-- Privacy - Required for iOS 17+ -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	
+	<key>NSPrivacyTrackingUsageDescription</key>
+	<string></string>
+	
+	<!-- Privacy Nutrition Label - No data collected -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	
+	<!-- Privacy Accessed API Types -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Status Bar -->
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+	
+	<!-- Launch Screen -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+		<key>UIImageName</key>
+		<string>LaunchLogo</string>
+	</dict>
+	
+	<!-- Required Device Capabilities -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>location-services</string>
+		<string>gps</string>
+		<string>magnetometer</string>
+		<string>accelerometer</string>
+	</array>
+	
+	<!-- File Sharing (for GPX export) -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	
+	<!-- Document Types for GPX files -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>GPX File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.topografix.gpx</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Exported Type Declarations -->
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>GPX File</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.topografix.gpx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gpx</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/gpx+xml</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
