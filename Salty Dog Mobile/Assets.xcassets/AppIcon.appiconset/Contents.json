@@ -1,1040 +1,178 @@
 {
   "images" : [
     {
-      "filename" : "SaltyDog_icon-iOS-Dark-1024x1024@1x 1.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-1024x1024@1x 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-20x20@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-20x20@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-20x20@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-20x20@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-29x29@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-29x29@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-29x29@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-29x29@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-40x40@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-40x40@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-40x40@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-40x40@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-60x60@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-60x60@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-60x60@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-60x60@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
+      "filename" : "SaltyDog_icon copy-iOS-Dark-1024x1024@1x.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-16x16@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-16x16@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-16x16@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-16x16@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-32x32@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-32x32@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-32x32@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-32x32@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-128x128@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-128x128@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-128x128@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-128x128@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-256x256@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-256x256@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-256x256@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-256x256@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-512x512@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-512x512@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-38x38@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-38x38@2x.png",
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "38x38"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-38x38@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-38x38@3x.png",
       "idiom" : "universal",
       "scale" : "3x",
       "size" : "38x38"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-64x64@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-64x64@2x.png",
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "64x64"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-64x64@3x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-64x64@3x.png",
       "idiom" : "universal",
       "scale" : "3x",
       "size" : "64x64"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-68x68@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-68x68@2x.png",
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "68x68"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-1024x1024@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x",
-      "size" : "1024x1024"
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-76x76@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-76x76@2x.png",
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearDark-83.5x83.5@2x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-83.5x83.5@2x.png",
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-20x20@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-20x20@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-20x20@2x 1.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-20x20@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-20x20@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-20x20@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-20x20@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-20x20@3x 1.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-20x20@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-20x20@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-29x29@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-29x29@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-29x29@2x 1.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-29x29@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-29x29@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-29x29@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-29x29@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-29x29@3x 1.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-29x29@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-29x29@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-40x40@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-40x40@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-40x40@2x 1.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-40x40@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-40x40@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-40x40@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-40x40@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-40x40@3x 1.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-40x40@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-40x40@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-60x60@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-60x60@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-60x60@2x 1.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-60x60@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-60x60@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-60x60@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-60x60@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-60x60@3x 1.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-60x60@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-60x60@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-16x16@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-16x16@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-16x16@1x 1.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-16x16@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-16x16@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-16x16@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-16x16@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-16x16@2x 1.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-16x16@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-16x16@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-32x32@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-32x32@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-32x32@1x 1.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-32x32@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-32x32@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-32x32@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-32x32@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-32x32@2x 1.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-32x32@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-32x32@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-128x128@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-128x128@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-128x128@1x 1.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-128x128@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-128x128@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-128x128@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-128x128@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-128x128@2x 1.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-128x128@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-128x128@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-256x256@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-256x256@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-256x256@1x 1.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-256x256@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-256x256@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-256x256@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-256x256@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-256x256@2x 1.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-256x256@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-256x256@2x.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-512x512@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-512x512@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-512x512@1x 1.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-512x512@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-512x512@1x.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-38x38@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-38x38@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-38x38@2x 1.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-38x38@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-38x38@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-38x38@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-38x38@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-38x38@3x 1.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-38x38@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-38x38@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "38x38",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-64x64@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-64x64@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-64x64@2x 1.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-64x64@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-64x64@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-64x64@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-64x64@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-64x64@3x 1.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-64x64@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-64x64@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-68x68@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-68x68@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-68x68@2x 1.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-68x68@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-68x68@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-76x76@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-76x76@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-76x76@2x 1.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-76x76@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-76x76@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-83.5x83.5@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Dark-83.5x83.5@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-Default-83.5x83.5@2x 1.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-83.5x83.5@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-83.5x83.5@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-ClearLight-1024x1024@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-1024x1024@1x 2.png",
       "idiom" : "universal",
       "scale" : "1x",
-      "size" : "1024x1024",
-      "unassigned" : true
+      "size" : "1024x1024"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-Dark-1024x1024@1x.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-1024x1024@1x 3.png",
       "idiom" : "universal",
       "scale" : "1x",
-      "size" : "1024x1024",
-      "unassigned" : true
+      "size" : "1024x1024"
     },
     {
-      "filename" : "SaltyDog_icon-iOS-Default-1024x1024@1x 3.png",
+      "filename" : "SaltyDog_icon copy-iOS-Dark-1024x1024@1x 4.png",
       "idiom" : "universal",
       "scale" : "1x",
-      "size" : "1024x1024",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedDark-1024x1024@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x",
-      "size" : "1024x1024",
-      "unassigned" : true
-    },
-    {
-      "filename" : "SaltyDog_icon-iOS-TintedLight-1024x1024@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x",
-      "size" : "1024x1024",
-      "unassigned" : true
+      "size" : "1024x1024"
     }
   ],
   "info" : {
