@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Salty%20Dog%20Mobile/Assets.xcassets/AppIcon.appiconset/SaltyDog_icon-iOS-Default-256x256@1x.png" alt="Salty Dog Logo" width="128" height="128">
+</p>
+
 # Salty Dog Mobile
 
 A sleek iOS navigation app designed for sailors and boaters, providing real-time speed, heading, and track recording with a beautiful marine-inspired dark theme.
@@ -43,11 +47,11 @@ A sleek iOS navigation app designed for sailors and boaters, providing real-time
 - **Keep Screen On** - Prevent screen dimming during navigation
 - **Background Tracking** - Continue recording with the app in background
 
-## Screenshots
+## Screenshot
 
-|             Navigation              |            Stats             |          Map          |
-| :---------------------------------: | :--------------------------: | :-------------------: |
-| Main dashboard with speed & heading | Session statistics breakdown | Interactive track map |
+<p align="center">
+  <img src="Salty%20Dog%20Mobile/Assets.xcassets/appScreenshot.jpeg" alt="Salty Dog Navigation Dashboard" width="300">
+</p>
 
 ## Requirements
 
