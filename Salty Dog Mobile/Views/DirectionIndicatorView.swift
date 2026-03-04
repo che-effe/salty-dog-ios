@@ -49,14 +49,14 @@ struct CardinalMarkersView: View {
     var body: some View {
         GeometryReader { geometry in
             let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
-            let radius = geometry.size.height / 2 - 20
+            let radius = geometry.size.height / 2 - 10
 
             ZStack {
                 // Major tick marks (N, E, S, W)
                 ForEach(0..<4) { index in
                     let angle = Double(index) * 90
 
-                    TickMark(length: 10, width: 2)
+                    TickMark(length: 8, width: 2)
                         .fill(Color.saltyBlue)
                         // Offset to edge, then rotate
                         .offset(y: -radius)
