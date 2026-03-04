@@ -113,7 +113,7 @@ struct MainDashboardView: View {
                 Spacer()
                 
                 // Stats stack
-                landscapeStatRow(label: "TOP SPEED", value: displayTopSpeed, unit: speedUnit.rawValue)
+                landscapeStatRow(label: "TOP", value: displayTopSpeed, unit: speedUnit.rawValue)
                 landscapeStatRow(label: "DISTANCE", value: displayDistance, unit: speedUnit.distanceLabel)
                 landscapeStatRow(label: "HEADING", value: displayHeading, unit: "")
                 landscapeStatRow(label: "DURATION", value: DurationFormatter.format(locationManager.sessionDuration), unit: "")
@@ -209,7 +209,7 @@ struct MainDashboardView: View {
     private var statsSummary: some View {
         HStack(spacing: 16) {
             statCard(
-                title: "TOP SPEED",
+                title: "TOP",
                 value: displayTopSpeed,
                 unit: speedUnit.rawValue
             )

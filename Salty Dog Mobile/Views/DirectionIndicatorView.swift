@@ -35,28 +35,12 @@ struct DirectionIndicatorView: View {
         .frame(width: size.width, height: size.height)
         .onChange(of: heading) { _, newHeading in
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                animatedHeading = calculateShortestRotation(from: -animatedHeading, to: -newHeading)
+                animatedHeading =  newHeading
             }
         }
         .onAppear {
             animatedHeading = heading
         }
-    }
-    
-    /// Calculate the shortest rotation path to avoid 359° -> 1° going the long way
-    private func calculateShortestRotation(from current: Double, to target: Double) -> Double {
-        let normalizedCurrent = current.truncatingRemainder(dividingBy: 360)
-        let normalizedTarget = target.truncatingRemainder(dividingBy: 360)
-        
-        var delta = normalizedTarget - normalizedCurrent
-        
-        if delta > 180 {
-            delta -= 360
-        } else if delta < -180 {
-            delta += 360
-        }
-        
-        return current + delta
     }
 }
 
@@ -65,38 +49,62 @@ struct CardinalMarkersView: View {
     var body: some View {
         GeometryReader { geometry in
             let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
-            let radius = min(geometry.size.width, geometry.size.height) / 2 - 8
-            
+            let radius = geometry.size.height / 2 - 20
+
             ZStack {
                 // Major tick marks (N, E, S, W)
-                ForEach([0, 90, 180, 270], id: \.self) { angle in
+                ForEach(0..<4) { index in
+                    let angle = Double(index) * 90
+
                     TickMark(length: 10, width: 2)
                         .fill(Color.saltyBlue)
-                        .position(
-                            x: center.x + radius * CGFloat(sin(Double(angle) * .pi / 180)),
-                            y: center.y - radius * CGFloat(cos(Double(angle) * .pi / 180))
-                        )
-                        .rotationEffect(.degrees(Double(angle)), anchor: .center)
+                        // Offset to edge, then rotate
+                        .offset(y: -radius)
+                        .rotationEffect(.degrees(angle))
                 }
-                
-                // Minor tick marks (every 30°)
-                ForEach([30, 60, 120, 150, 210, 240, 300, 330], id: \.self) { angle in
-                    TickMark(length: 5, width: 1)
-                        .fill(Color.saltyTextSecondary.opacity(0.5))
-                        .position(
-                            x: center.x + radius * CGFloat(sin(Double(angle) * .pi / 180)),
-                            y: center.y - radius * CGFloat(cos(Double(angle) * .pi / 180))
-                        )
-                        .rotationEffect(.degrees(Double(angle)), anchor: .center)
+//                
+                // Minor tick marks (NE, SE, SW, NW)
+                ForEach(0..<4) { index in
+                    let angle = Double(index) * 90
+
+                    TickMark(length: 5, width: 2)
+                        .fill(Color.saltyTextPrimary)
+                        // Offset to edge, then rotate
+                        .offset(y: -radius-20)
+                        .rotationEffect(.degrees(angle+45))
                 }
                 
                 // N marker (special highlight)
                 Text("N")
-                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyOrange)
                     .position(
                         x: center.x,
-                        y: center.y - radius + 16
+                        y: center.y - radius - 20
+                    )
+                // S marker (standard text)
+                Text("S")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.saltyTextPrimary)
+                    .position(
+                        x: center.x,
+                        y: center.y + radius + 20
+                    )
+                // E marker (standard text)
+                Text("E")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.saltyTextPrimary)
+                    .position(
+                        x: center.x + radius + 20,
+                        y: center.y
+                    )
+                // E marker (standard text)
+                Text("W")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.saltyTextPrimary)
+                    .position(
+                        x: center.x - radius - 20,
+                        y: center.y
                     )
             }
         }
