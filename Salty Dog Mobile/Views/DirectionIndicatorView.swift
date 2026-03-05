@@ -31,7 +31,7 @@ struct DirectionIndicatorView: View {
                     .stroke(Color.saltyCardBackground, lineWidth: 3)
                 
                 // Cardinal direction markers
-                CardinalMarkersView()
+                CardinalMarkersView(counterRotation: animatedHeading)
             }
             .rotationEffect(.degrees(-animatedHeading))
             
@@ -65,6 +65,8 @@ struct DirectionIndicatorView: View {
 
 /// Cardinal direction markers around the compass
 struct CardinalMarkersView: View {
+    var counterRotation: Double = 0
+    
     var body: some View {
         GeometryReader { geometry in
             let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -97,6 +99,7 @@ struct CardinalMarkersView: View {
                 Text("N")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyOrange)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x,
                         y: center.y - radius - 20
@@ -105,6 +108,7 @@ struct CardinalMarkersView: View {
                 Text("S")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x,
                         y: center.y + radius + 20
@@ -113,14 +117,16 @@ struct CardinalMarkersView: View {
                 Text("E")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x + radius + 20,
                         y: center.y
                     )
-                // E marker (standard text)
+                // W marker (standard text)
                 Text("W")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x - radius - 20,
                         y: center.y
