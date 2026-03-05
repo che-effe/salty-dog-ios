@@ -1,5 +1,19 @@
 import SwiftUI
 
+/// Calculates the shortest angular distance between two angles
+/// Returns a value between -180 and 180 degrees
+private func shortestAngularDistance(from: Double, to: Double) -> Double {
+    var delta = to - from
+    // Normalize to -180...180 range
+    delta = delta.truncatingRemainder(dividingBy: 360)
+    if delta > 180 {
+        delta -= 360
+    } else if delta < -180 {
+        delta += 360
+    }
+    return delta
+}
+
 /// Wind vane style direction indicator that rotates based on heading
 /// Features smooth rotation animation and nautical styling
 struct DirectionIndicatorView: View {
@@ -10,20 +24,23 @@ struct DirectionIndicatorView: View {
     
     var body: some View {
         ZStack {
-            // Compass ring background
-            Circle()
-                .stroke(Color.saltyCardBackground, lineWidth: 3)
+            // Rotating compass dial (ring + markers)
+            ZStack {
+                // Compass ring background
+                Circle()
+                    .stroke(Color.saltyCardBackground, lineWidth: 3)
+                
+                // Cardinal direction markers
+                CardinalMarkersView(counterRotation: animatedHeading)
+            }
+            .rotationEffect(.degrees(-animatedHeading))
             
-            // Cardinal direction markers
-            CardinalMarkersView()
-            
-            // Wind vane arrow
+            // Static wind vane arrow - always points up
             WindVaneArrow()
                 .fill(Color.saltyBlue)
-                .rotationEffect(.degrees(animatedHeading))
                 .shadow(color: .saltyBlue.opacity(0.5), radius: 4, x: 0, y: 2)
             
-            // Center cap
+            // Center cap (static)
             Circle()
                 .fill(Color.saltyCardBackground)
                 .frame(width: size.width * 0.15, height: size.height * 0.15)
@@ -35,7 +52,9 @@ struct DirectionIndicatorView: View {
         .frame(width: size.width, height: size.height)
         .onChange(of: heading) { _, newHeading in
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                animatedHeading =  newHeading
+                // Calculate shortest angular distance to handle 0/360 boundary
+                let delta = shortestAngularDistance(from: animatedHeading, to: newHeading)
+                animatedHeading += delta
             }
         }
         .onAppear {
@@ -46,6 +65,8 @@ struct DirectionIndicatorView: View {
 
 /// Cardinal direction markers around the compass
 struct CardinalMarkersView: View {
+    var counterRotation: Double = 0
+    
     var body: some View {
         GeometryReader { geometry in
             let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -78,6 +99,7 @@ struct CardinalMarkersView: View {
                 Text("N")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyOrange)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x,
                         y: center.y - radius - 20
@@ -86,6 +108,7 @@ struct CardinalMarkersView: View {
                 Text("S")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x,
                         y: center.y + radius + 20
@@ -94,14 +117,16 @@ struct CardinalMarkersView: View {
                 Text("E")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x + radius + 20,
                         y: center.y
                     )
-                // E marker (standard text)
+                // W marker (standard text)
                 Text("W")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.saltyTextPrimary)
+                    .rotationEffect(.degrees(counterRotation))
                     .position(
                         x: center.x - radius - 20,
                         y: center.y
@@ -216,7 +241,9 @@ struct WindDirectionArrowView: View {
         }
         .onChange(of: windDirection) { _, newDirection in
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                animatedDirection = newDirection
+                // Calculate shortest angular distance to handle 0/360 boundary
+                let delta = shortestAngularDistance(from: animatedDirection, to: newDirection)
+                animatedDirection += delta
             }
         }
         .onAppear {
