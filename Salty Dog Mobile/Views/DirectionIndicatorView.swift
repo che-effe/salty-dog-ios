@@ -24,20 +24,23 @@ struct DirectionIndicatorView: View {
     
     var body: some View {
         ZStack {
-            // Compass ring background
-            Circle()
-                .stroke(Color.saltyCardBackground, lineWidth: 3)
+            // Rotating compass dial (ring + markers)
+            ZStack {
+                // Compass ring background
+                Circle()
+                    .stroke(Color.saltyCardBackground, lineWidth: 3)
+                
+                // Cardinal direction markers
+                CardinalMarkersView()
+            }
+            .rotationEffect(.degrees(-animatedHeading))
             
-            // Cardinal direction markers
-            CardinalMarkersView()
-            
-            // Wind vane arrow
+            // Static wind vane arrow - always points up
             WindVaneArrow()
                 .fill(Color.saltyBlue)
-                .rotationEffect(.degrees(animatedHeading))
                 .shadow(color: .saltyBlue.opacity(0.5), radius: 4, x: 0, y: 2)
             
-            // Center cap
+            // Center cap (static)
             Circle()
                 .fill(Color.saltyCardBackground)
                 .frame(width: size.width * 0.15, height: size.height * 0.15)
