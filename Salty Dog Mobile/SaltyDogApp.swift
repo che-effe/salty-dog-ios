@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct SaltyDogApp: App {
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var weatherManager = WeatherManager()
     @AppStorage("speedUnit") private var speedUnitRaw: String = SpeedUnit.knots.rawValue
     @AppStorage("keepScreenOn") private var keepScreenOn: Bool = true
     
@@ -15,15 +16,19 @@ struct SaltyDogApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(locationManager: locationManager, speedUnit: speedUnit)
-                .preferredColorScheme(.dark)
-                .onAppear {
-                    // Keep screen on while navigating
-                    UIApplication.shared.isIdleTimerDisabled = keepScreenOn
-                }
-                .onChange(of: keepScreenOn) { _, newValue in
-                    UIApplication.shared.isIdleTimerDisabled = newValue
-                }
+            ContentView(
+                locationManager: locationManager,
+                weatherManager: weatherManager,
+                speedUnit: speedUnit
+            )
+            .preferredColorScheme(.dark)
+            .onAppear {
+                // Keep screen on while navigating
+                UIApplication.shared.isIdleTimerDisabled = keepScreenOn
+            }
+            .onChange(of: keepScreenOn) { _, newValue in
+                UIApplication.shared.isIdleTimerDisabled = newValue
+            }
         }
     }
 }

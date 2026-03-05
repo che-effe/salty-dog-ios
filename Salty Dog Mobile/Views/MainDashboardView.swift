@@ -1,9 +1,11 @@
 import SwiftUI
 import Combine
+internal import _LocationEssentials
 
 /// The primary navigation display showing real-time speed, heading, and navigation data
 struct MainDashboardView: View {
     @ObservedObject var locationManager: LocationManager
+    @ObservedObject var weatherManager: WeatherManager
     @Binding var speedUnit: SpeedUnit
     
     @State private var currentTime = Date()
@@ -33,6 +35,17 @@ struct MainDashboardView: View {
     private var displayHeading: String {
         HeadingFormatter.format(locationManager.currentHeading)
     }
+    private var windHeading: String {
+        HeadingFormatter.cardinalDirection(for: weatherManager.currentWeather.windDirection)
+    }
+    
+    private var windSpeed: String {
+        WindSpeedFormatter.format(weatherManager.currentWeather.windSpeed, unit: speedUnit)
+    }
+    
+    private var windDisplay: String {
+        "\(windSpeed) \(speedUnit.displayName) \(windHeading)"
+    }
     
     private var displayTime: String {
         TimeFormatter.currentTime(use24Hour: use24Hour)
@@ -53,8 +66,24 @@ struct MainDashboardView: View {
             }
         }
         .onReceive(timer) { currentTime = $0 }
+        .onChange(of: locationManager.currentCoordinate?.latitude) { _, _ in
+               fetchWeatherIfNeeded()
+           }
+           .task {
+               // Initial fetch when view appears
+               fetchWeatherIfNeeded()
+           }
     }
-    
+    private func fetchWeatherIfNeeded() {
+        guard let coordinate = locationManager.currentCoordinate else { return }
+        
+        Task {
+            await weatherManager.fetchWeather(
+                latitude: coordinate.latitude,
+                longitude: coordinate.longitude
+            )
+        }
+    }
     // MARK: - Portrait Layout
     
     @ViewBuilder
@@ -73,10 +102,15 @@ struct MainDashboardView: View {
                     .frame(maxWidth: .infinity)
             }
             .padding(.horizontal, DesignConstants.screenPadding)
+            HStack(spacing: 0) {
+                windCard
+                    .frame(maxWidth: .infinity)
+                // Heading bar
+                headingCard
+                    .frame(maxWidth: .infinity)
+                    
+            }
             
-            // Heading bar
-            headingBar
-                .padding(.horizontal, DesignConstants.screenPadding)
             
             // Stats summary row
             statsSummary
@@ -159,11 +193,6 @@ struct MainDashboardView: View {
                     .font(.saltyLabel(12, weight: .medium))
                     .foregroundColor(.saltyTextSecondary)
             }
-           
-//            Text(speedUnit.rawValue)
-//                .font(.saltyLabel(DesignConstants.Typography.speedUnitSize, weight: .semibold))
-//                .foregroundColor(.saltyBlue)
-//                .textCase(.uppercase)
                 
         }
         .saltyCardStyle()
@@ -192,14 +221,12 @@ struct MainDashboardView: View {
         )
     }
     
-    private var headingBar: some View {
-        HStack {
+    private var headingCard: some View {
+        VStack {
             Text("HEADING")
                 .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .semibold))
                 .foregroundColor(.saltyBlue)
-            
-            Spacer()
-            
+                        
             HStack(spacing: 8) {
                 Text(HeadingFormatter.cardinalDirection(for: locationManager.currentHeading))
                     .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
@@ -213,6 +240,26 @@ struct MainDashboardView: View {
             }
         }
         .padding(.vertical, 12)
+        .saltyCardStyle()
+    }
+    private var windCard: some View {
+        VStack {
+            Text("WIND")
+                .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .semibold))
+                .foregroundColor(.saltyBlue)
+                        
+            HStack(spacing: 8) {
+                Text(windHeading)
+                    .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
+                    .foregroundColor(.saltyOrange)
+                Text(windSpeed)
+                    .font(.saltyDisplay(DesignConstants.Typography.headingValueSize, weight: .bold))
+                    .foregroundColor(.saltyTextPrimary)
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
+            }
+        }
+        .padding(.vertical, 2)
         .saltyCardStyle()
     }
     
@@ -334,6 +381,7 @@ extension MainDashboardView {
 #Preview("Portrait") {
     MainDashboardView(
         locationManager: LocationManager(),
+        weatherManager: WeatherManager(),
         speedUnit: .constant(.knots)
     )
 }
@@ -341,6 +389,7 @@ extension MainDashboardView {
 #Preview("Landscape") {
     MainDashboardView(
         locationManager: LocationManager(),
+        weatherManager: WeatherManager(),
         speedUnit: .constant(.knots)
     )
     .previewInterfaceOrientation(.landscapeLeft)

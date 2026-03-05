@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var locationManager: LocationManager
+    @ObservedObject var weatherManager: WeatherManager
     @Binding var speedUnit: SpeedUnit
     
     @State private var selectedTab: Int = 0
@@ -10,12 +11,22 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             MainDashboardView(
                 locationManager: locationManager,
+                weatherManager: weatherManager,
                 speedUnit: $speedUnit
             )
             .tabItem {
                 Label("Navigate", systemImage: "location.north.fill")
             }
             .tag(0)
+            
+            FishingView(
+                locationManager: locationManager,
+                weatherManager: weatherManager
+            )
+            .tabItem {
+                Label("Fishing", systemImage: "fish.fill")
+            }
+            .tag(1)
             
             StatsView(
                 locationManager: locationManager,
@@ -24,13 +35,13 @@ struct ContentView: View {
             .tabItem {
                 Label("Stats", systemImage: "chart.bar.fill")
             }
-            .tag(1)
+            .tag(2)
             
             SettingsView(locationManager: locationManager)
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
-                .tag(2)
+                .tag(3)
         }
         .tint(.saltyBlue)
         .onAppear {
@@ -64,6 +75,7 @@ struct ContentView: View {
 #Preview {
     ContentView(
         locationManager: LocationManager(),
+        weatherManager: WeatherManager(),
         speedUnit: .constant(.knots)
     )
 }
