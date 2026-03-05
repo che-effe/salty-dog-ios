@@ -1,5 +1,19 @@
 import SwiftUI
 
+/// Calculates the shortest angular distance between two angles
+/// Returns a value between -180 and 180 degrees
+private func shortestAngularDistance(from: Double, to: Double) -> Double {
+    var delta = to - from
+    // Normalize to -180...180 range
+    delta = delta.truncatingRemainder(dividingBy: 360)
+    if delta > 180 {
+        delta -= 360
+    } else if delta < -180 {
+        delta += 360
+    }
+    return delta
+}
+
 /// Wind vane style direction indicator that rotates based on heading
 /// Features smooth rotation animation and nautical styling
 struct DirectionIndicatorView: View {
@@ -35,7 +49,9 @@ struct DirectionIndicatorView: View {
         .frame(width: size.width, height: size.height)
         .onChange(of: heading) { _, newHeading in
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                animatedHeading =  newHeading
+                // Calculate shortest angular distance to handle 0/360 boundary
+                let delta = shortestAngularDistance(from: animatedHeading, to: newHeading)
+                animatedHeading += delta
             }
         }
         .onAppear {
@@ -216,7 +232,9 @@ struct WindDirectionArrowView: View {
         }
         .onChange(of: windDirection) { _, newDirection in
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                animatedDirection = newDirection
+                // Calculate shortest angular distance to handle 0/360 boundary
+                let delta = shortestAngularDistance(from: animatedDirection, to: newDirection)
+                animatedDirection += delta
             }
         }
         .onAppear {
