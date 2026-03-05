@@ -191,6 +191,69 @@ struct CompactDirectionIndicator: View {
     }
 }
 
+/// Wind direction arrow indicator using SF Symbol
+/// Arrow points in the direction the wind is blowing FROM
+struct WindDirectionArrowView: View {
+    let windDirection: Double // degrees (0-360, meteorological convention: direction wind blows FROM)
+    var size: CGFloat = 24
+    var color: Color = .saltyBlue
+    var showBackground: Bool = false
+    
+    @State private var animatedDirection: Double = 0
+    
+    var body: some View {
+        ZStack {
+            if showBackground {
+                Circle()
+                    .fill(Color.saltyCardBackground)
+                    .frame(width: size * 1.5, height: size * 1.5)
+            }
+            
+            Image(systemName: "arrow.up")
+                .font(.system(size: size, weight: .bold))
+                .foregroundColor(color)
+                .rotationEffect(.degrees(animatedDirection))
+        }
+        .onChange(of: windDirection) { _, newDirection in
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+                animatedDirection = newDirection
+            }
+        }
+        .onAppear {
+            animatedDirection = windDirection
+        }
+    }
+}
+
+/// Wind direction indicator with label
+struct WindDirectionIndicatorView: View {
+    let windDirection: Double
+    let windSpeed: String
+    let unit: String
+    var size: CGFloat = 32
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            WindDirectionArrowView(
+                windDirection: windDirection,
+                size: size,
+                color: .saltyBlue,
+                showBackground: true
+            )
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(windSpeed) \(unit)")
+                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    .foregroundColor(.saltyTextPrimary)
+                
+                Text(HeadingFormatter.cardinalDirection(for: windDirection))
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(.saltyTextSecondary)
+            }
+        }
+    }
+}
+
 #Preview("Direction Indicator") {
     VStack(spacing: 40) {
         DirectionIndicatorView(
@@ -202,6 +265,37 @@ struct CompactDirectionIndicator: View {
             heading: 225,
             size: CGSize(width: 80, height: 80)
         )
+    }
+    .padding()
+    .background(Color.black)
+}
+
+#Preview("Wind Direction Arrow") {
+    VStack(spacing: 30) {
+        // Simple arrow
+        WindDirectionArrowView(windDirection: 45, size: 32)
+        
+        // Arrow with background
+        WindDirectionArrowView(windDirection: 180, size: 24, showBackground: true)
+        
+        // Full indicator with speed
+        WindDirectionIndicatorView(
+            windDirection: 225,
+            windSpeed: "12",
+            unit: "KTS"
+        )
+        
+        // Different directions
+        HStack(spacing: 20) {
+            ForEach([0, 90, 180, 270], id: \.self) { direction in
+                VStack {
+                    WindDirectionArrowView(windDirection: Double(direction), size: 20)
+                    Text("\(direction)°")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                }
+            }
+        }
     }
     .padding()
     .background(Color.black)
