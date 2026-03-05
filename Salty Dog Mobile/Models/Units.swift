@@ -10,7 +10,7 @@ enum SpeedUnit: String, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .knots: return "Knots"
+        case .knots: return "KTS"
         case .mph: return "MPH"
         case .kph: return "KPH"
         }

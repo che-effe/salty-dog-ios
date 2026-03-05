@@ -98,10 +98,12 @@ class LocationManager: NSObject, ObservableObject {
     private var sessionTimer: Timer?
     private var backgroundTrackingEnabled: Bool = false
     
-    // Minimum accuracy threshold (meters)
-    private let minimumAccuracy: CLLocationAccuracy = 20
+    // Minimum accuracy threshold (meters) - relaxed for initial GPS acquisition
+    private let minimumAccuracy: CLLocationAccuracy = 50
     // Minimum speed threshold to filter out noise (m/s)
     private let minimumSpeedThreshold: Double = 0.3
+    // Track if we've received any valid location
+    @Published var hasValidLocation: Bool = false
     
     // MARK: - Initialization
     override init() {
@@ -167,6 +169,8 @@ class LocationManager: NSObject, ObservableObject {
         previousLocation = nil
         speedSamples = []
         sessionStartTime = nil
+        hasValidLocation = false
+        locationError = nil
         
         startTracking()
     }
@@ -247,14 +251,32 @@ class LocationManager: NSObject, ObservableObject {
     }
     
     private func processLocation(_ location: CLLocation) {
-        // Filter out inaccurate readings
-        guard location.horizontalAccuracy <= minimumAccuracy,
-              location.horizontalAccuracy >= 0 else {
+        // Always update current coordinate for map display (even low accuracy)
+        currentCoordinate = location.coordinate
+        
+        // Log accuracy for debugging on physical devices
+        #if DEBUG
+        print("[Location] Accuracy: \(location.horizontalAccuracy)m, Speed: \(location.speed)m/s")
+        #endif
+        
+        // Filter out invalid or very inaccurate readings
+        guard location.horizontalAccuracy >= 0 else {
+            locationError = "Waiting for GPS signal..."
             return
         }
         
-        // Update current coordinate
-        currentCoordinate = location.coordinate
+        // Mark that we have a valid location (even if low accuracy)
+        hasValidLocation = true
+        locationError = nil
+        
+        // For speed/distance calculations, require better accuracy
+        guard location.horizontalAccuracy <= minimumAccuracy else {
+            // Still show we have location, but speed data may be less accurate
+            if location.horizontalAccuracy > 100 {
+                locationError = "Low GPS accuracy (\(Int(location.horizontalAccuracy))m) - move outdoors"
+            }
+            return
+        }
         
         // Update speed (filter out negative values)
         let speed = max(0, location.speed)
@@ -339,6 +361,13 @@ extension LocationManager: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
             updateAuthorizationStatus()
+            
+            // Check for reduced accuracy (Precise Location off)
+            if #available(iOS 14.0, *) {
+                if manager.accuracyAuthorization == .reducedAccuracy {
+                    locationError = "Please enable Precise Location in Settings for accurate speed readings"
+                }
+            }
             
             if authorizationStatus == .authorized || authorizationStatus == .authorizedAlways {
                 startTracking()

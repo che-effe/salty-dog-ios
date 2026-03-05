@@ -142,19 +142,29 @@ struct MainDashboardView: View {
     
     private var speedCard: some View {
         VStack(spacing: 4) {
-            Text(displaySpeed)
-                .font(.saltyDisplay(DesignConstants.Typography.speedValueSize, weight: .black))
-                .foregroundColor(.saltyTextPrimary)
-                .monospacedDigit()
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-                .contentTransition(.numericText())
-                .animation(.easeInOut(duration: 0.15), value: displaySpeed)
-            
-            Text(speedUnit.rawValue)
+            Text("Speed")
                 .font(.saltyLabel(DesignConstants.Typography.speedUnitSize, weight: .semibold))
                 .foregroundColor(.saltyBlue)
                 .textCase(.uppercase)
+            HStack {
+                Text(displaySpeed)
+                    .font(.saltyDisplay(DesignConstants.Typography.speedValueSize, weight: .black))
+                    .foregroundColor(.saltyTextPrimary)
+                    .monospacedDigit()
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+                    .contentTransition(.numericText())
+                    .animation(.easeInOut(duration: 0.15), value: displaySpeed)
+                Text(speedUnit.displayName)
+                    .font(.saltyLabel(12, weight: .medium))
+                    .foregroundColor(.saltyTextSecondary)
+            }
+           
+//            Text(speedUnit.rawValue)
+//                .font(.saltyLabel(DesignConstants.Typography.speedUnitSize, weight: .semibold))
+//                .foregroundColor(.saltyBlue)
+//                .textCase(.uppercase)
+                
         }
         .saltyCardStyle()
     }
@@ -211,7 +221,7 @@ struct MainDashboardView: View {
             statCard(
                 title: "TOP",
                 value: displayTopSpeed,
-                unit: speedUnit.rawValue
+                unit: speedUnit.displayName
             )
             
             statCard(
