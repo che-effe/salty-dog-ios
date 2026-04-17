@@ -270,6 +270,8 @@
 				DEVELOPMENT_TEAM = NWC3YPZE9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Salty Dog";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "SaltyDog uses your location in the background to continue tracking your route while sailing.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "SaltyDog uses your location to display real-time speed, heading, and track your sailing route.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -306,6 +308,8 @@
 				DEVELOPMENT_TEAM = NWC3YPZE9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Salty Dog";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "SaltyDog uses your location in the background to continue tracking your route while sailing.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "SaltyDog uses your location to display real-time speed, heading, and track your sailing route.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -37,7 +37,7 @@ struct WaveAnimationView: View {
                         endPoint: .bottom
                     )
                 )
-                .offset(y: -10)
+                .offset(y: 10)
                 // Back wave (slowest, deepest blue)
                 WaveShape(
                     amplitude: 8,
@@ -54,7 +54,7 @@ struct WaveAnimationView: View {
                         endPoint: .bottom
                     )
                 )
-                .offset(y: -5)
+                .offset(y: 15)
                 // Middle wave
                 WaveShape(
                     amplitude: 10,
@@ -71,7 +71,7 @@ struct WaveAnimationView: View {
                         endPoint: .bottom
                     )
                 )
-                .offset(y: 10)
+                .offset(y: 20)
                 
                 // Front wave (fastest, brightest)
                 WaveShape(
@@ -88,7 +88,7 @@ struct WaveAnimationView: View {
                         startPoint: .top,
                         endPoint: .bottom
                     )
-                ).offset(y: 20)
+                ).offset(y: 40)
                 
                 // Foam highlights on front wave
                 WaveShape(
@@ -106,7 +106,7 @@ struct WaveAnimationView: View {
                         endPoint: .bottom
                     )
                 )
-                .offset(y: 40)
+                .offset(y: 60)
             }
         }
         .onAppear {

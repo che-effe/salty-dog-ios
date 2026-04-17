@@ -136,10 +136,12 @@ struct MainDashboardView: View {
             
             Spacer()
             
-            // Wave animation at bottom
-            WaveAnimationView(isActive: locationManager.isTracking)
-                .frame(height: DesignConstants.waveHeight)
-                .ignoresSafeArea(edges: .bottom)
+            .safeAreaInset(edge: .bottom){
+                // Wave animation at bottom
+                WaveAnimationView(isActive: locationManager.isTracking)
+                    .frame(height: DesignConstants.waveHeight)
+            }
+            
         }
     }
     
@@ -147,6 +149,17 @@ struct MainDashboardView: View {
     
     @ViewBuilder
     private func landscapeLayout(geometry: GeometryProxy) -> some View {
+        Spacer()
+
+        Spacer()
+
+        Spacer()
+        .safeAreaInset(edge: .bottom){
+            WaveAnimationView(isActive: locationManager.isTracking)
+                .frame(height: DesignConstants.waveHeight)
+        }
+       
+
         HStack(spacing: 24) {
             // Left side: Speed display
             VStack {
@@ -154,20 +167,16 @@ struct MainDashboardView: View {
                 landscapeSpeedDisplay
                 Spacer()
                 
-                // Compact wave
-                CompactWaveView()
-                    .frame(height: 30)
             }
             .frame(width: geometry.size.width * 0.4)
             
             // Right side: Stats and heading
             VStack(spacing: 16) {
                 Spacer()
-                
                 // Stats stack
                 landscapeStatRow(label: "TOP", value: displayTopSpeed, unit: speedUnit.rawValue)
                 landscapeStatRow(label: "DISTANCE", value: displayDistance, unit: speedUnit.distanceLabel)
-                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "")
+                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "", cardinal:true)
                 landscapeStatRow(label: "DURATION", value: DurationFormatter.format(locationManager.sessionDuration), unit: "")
                 
                 Spacer()
@@ -178,7 +187,7 @@ struct MainDashboardView: View {
             directionIndicator
                 .padding(.trailing, 16)
         }
-        .padding(.horizontal, DesignConstants.screenPadding)
+       
     }
     
     // MARK: - Component Views
@@ -294,7 +303,7 @@ struct MainDashboardView: View {
         .saltyCardStyle()
     }
     
-    private func landscapeStatRow(label: String, value: String, unit: String) -> some View {
+    private func landscapeStatRow(label: String, value: String, unit: String, cardinal: Bool = false) -> some View {
         HStack {
             Text(label)
                 .font(.saltyLabel(14, weight: .semibold))
@@ -303,12 +312,18 @@ struct MainDashboardView: View {
             Spacer()
             
             HStack(alignment: .lastTextBaseline, spacing: 4) {
+                
                 Text(value)
                     .font(.saltyDisplay(DesignConstants.Typography.landscapeStatSize, weight: .bold))
                     .foregroundColor(.saltyTextPrimary)
                     .monospacedDigit()
                     .contentTransition(.numericText())
-                
+                if cardinal {
+                    Text(HeadingFormatter.cardinalDirection(for: locationManager.currentHeading))
+                        .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
+                        .foregroundColor(.saltyOrange)
+
+                }
                 if !unit.isEmpty {
                     Text(unit)
                         .font(.saltyLabel(12, weight: .medium))
