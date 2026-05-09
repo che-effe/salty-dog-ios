@@ -156,6 +156,7 @@ struct MainDashboardView: View {
         Spacer()
         .safeAreaInset(edge: .bottom){
             WaveAnimationView(isActive: locationManager.isTracking)
+                .frame(maxWidth: .infinity)
                 .frame(height: DesignConstants.waveHeight)
         }
        
