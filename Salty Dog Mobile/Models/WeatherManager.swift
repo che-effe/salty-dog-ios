@@ -250,7 +250,7 @@ class WeatherManager: ObservableObject {
         let distanceFromLastFetch = location.distance(from: lastLocation)
         
         // Skip if fetched recently AND haven't moved significantly
-        return timeSinceLastFetch < minimumFetchInterval && 
+        return timeSinceLastFetch > minimumFetchInterval && 
                distanceFromLastFetch < minimumFetchDistance
     }
 }
