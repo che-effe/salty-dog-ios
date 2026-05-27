@@ -16,7 +16,13 @@ struct MainDashboardView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // MARK: - Computed Display Values
-    
+    private func halfWidth(in geometry: GeometryProxy, spacing: CGFloat = 12) -> CGFloat {
+        // Available width inside the padded HStack:
+        let available = geometry.size.width
+            - (2 * DesignConstants.screenPadding) // left + right padding
+            - spacing                              // HStack spacing between the two items
+        return available / 2
+    }
     private var displaySpeed: String {
         let speed = speedUnit.convert(fromMetersPerSecond: locationManager.currentSpeed)
         return SpeedFormatter.format(speed, unit: speedUnit)
@@ -96,21 +102,33 @@ struct MainDashboardView: View {
             // Speed and Direction row
             HStack(spacing: 12) {
                 speedCard
-                    .frame(maxWidth: .infinity)
-                
+                    .frame(width: halfWidth(in: geometry))
+
                 directionIndicator
-                    .frame(maxWidth: .infinity)
+                    .frame(width: halfWidth(in: geometry)) // or give it a fixed width if you prefer
             }
             .padding(.horizontal, DesignConstants.screenPadding)
-            HStack(spacing: 0) {
-                windCard
-                    .frame(maxWidth: .infinity)
-                // Heading bar
-                headingCard
-                    .frame(maxWidth: .infinity)
+            HStack(spacing: 12) {
+                statCard(
+                    title: "TOP",
+                    value: displayTopSpeed,
+                    unit: speedUnit.displayName
+                )
+                statCard(
+                    title: "WIND",
+                    value: windSpeed,
+                    unit: speedUnit.distanceLabel,
+                    cardinal: true
+                )
+                statCard(
+                    title: "HEADING",
+                    value: displayHeading,
+                    unit: speedUnit.distanceLabel,
+                    cardinal: true
+                )
                     
             }
-            
+            .padding(.horizontal, DesignConstants.screenPadding)
             
             // Stats summary row
             statsSummary
@@ -118,10 +136,12 @@ struct MainDashboardView: View {
             
             Spacer()
             
-            // Wave animation at bottom
-            WaveAnimationView(isActive: locationManager.isTracking)
-                .frame(height: DesignConstants.waveHeight)
-                .ignoresSafeArea(edges: .bottom)
+            .safeAreaInset(edge: .bottom){
+                // Wave animation at bottom
+                WaveAnimationView(isActive: locationManager.isTracking)
+                    .frame(height: DesignConstants.waveHeight)
+            }
+            
         }
     }
     
@@ -129,6 +149,18 @@ struct MainDashboardView: View {
     
     @ViewBuilder
     private func landscapeLayout(geometry: GeometryProxy) -> some View {
+        Spacer()
+
+        Spacer()
+
+        Spacer()
+        .safeAreaInset(edge: .bottom){
+            WaveAnimationView(isActive: locationManager.isTracking)
+                .frame(maxWidth: .infinity)
+                .frame(height: DesignConstants.waveHeight)
+        }
+       
+
         HStack(spacing: 24) {
             // Left side: Speed display
             VStack {
@@ -136,20 +168,16 @@ struct MainDashboardView: View {
                 landscapeSpeedDisplay
                 Spacer()
                 
-                // Compact wave
-                CompactWaveView()
-                    .frame(height: 30)
             }
             .frame(width: geometry.size.width * 0.4)
             
             // Right side: Stats and heading
             VStack(spacing: 16) {
                 Spacer()
-                
                 // Stats stack
                 landscapeStatRow(label: "TOP", value: displayTopSpeed, unit: speedUnit.rawValue)
                 landscapeStatRow(label: "DISTANCE", value: displayDistance, unit: speedUnit.distanceLabel)
-                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "")
+                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "", cardinal:true)
                 landscapeStatRow(label: "DURATION", value: DurationFormatter.format(locationManager.sessionDuration), unit: "")
                 
                 Spacer()
@@ -160,7 +188,7 @@ struct MainDashboardView: View {
             directionIndicator
                 .padding(.trailing, 16)
         }
-        .padding(.horizontal, DesignConstants.screenPadding)
+       
     }
     
     // MARK: - Component Views
@@ -180,22 +208,23 @@ struct MainDashboardView: View {
                 .font(.saltyLabel(DesignConstants.Typography.speedUnitSize, weight: .semibold))
                 .foregroundColor(.saltyBlue)
                 .textCase(.uppercase)
-            HStack {
+            VStack(alignment: .center) {
                 Text(displaySpeed)
                     .font(.saltyDisplay(DesignConstants.Typography.speedValueSize, weight: .black))
                     .foregroundColor(.saltyTextPrimary)
                     .monospacedDigit()
-                    .minimumScaleFactor(0.5)
+                    .minimumScaleFactor(0.2)
                     .lineLimit(1)
                     .contentTransition(.numericText())
                     .animation(.easeInOut(duration: 0.15), value: displaySpeed)
                 Text(speedUnit.displayName)
-                    .font(.saltyLabel(12, weight: .medium))
+                    .font(.saltyLabel(20, weight: .medium))
                     .foregroundColor(.saltyTextSecondary)
             }
                 
         }
-        .saltyCardStyle()
+        .frame(maxWidth: .infinity, alignment: .center)
+        .saltyCardFullWidthStyle()
     }
     
     private var landscapeSpeedDisplay: some View {
@@ -221,56 +250,9 @@ struct MainDashboardView: View {
         )
     }
     
-    private var headingCard: some View {
-        VStack {
-            Text("HEADING")
-                .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .semibold))
-                .foregroundColor(.saltyBlue)
-                        
-            HStack(spacing: 8) {
-                Text(HeadingFormatter.cardinalDirection(for: locationManager.currentHeading))
-                    .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
-                    .foregroundColor(.saltyOrange)
-                
-                Text(displayHeading)
-                    .font(.saltyDisplay(DesignConstants.Typography.headingValueSize, weight: .bold))
-                    .foregroundColor(.saltyTextPrimary)
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
-            }
-        }
-        .padding(.vertical, 12)
-        .saltyCardStyle()
-    }
-    private var windCard: some View {
-        VStack {
-            Text("WIND")
-                .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .semibold))
-                .foregroundColor(.saltyBlue)
-                        
-            HStack(spacing: 8) {
-                Text(windHeading)
-                    .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
-                    .foregroundColor(.saltyOrange)
-                Text(windSpeed)
-                    .font(.saltyDisplay(DesignConstants.Typography.headingValueSize, weight: .bold))
-                    .foregroundColor(.saltyTextPrimary)
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
-            }
-        }
-        .padding(.vertical, 2)
-        .saltyCardStyle()
-    }
     
     private var statsSummary: some View {
         HStack(spacing: 16) {
-            statCard(
-                title: "TOP",
-                value: displayTopSpeed,
-                unit: speedUnit.displayName
-            )
-            
             statCard(
                 title: "DISTANCE",
                 value: displayDistance,
@@ -280,23 +262,34 @@ struct MainDashboardView: View {
             statCard(
                 title: "DURATION",
                 value: DurationFormatter.format(locationManager.sessionDuration),
-                unit: ""
+                unit: "time"
             )
         }
     }
     
-    private func statCard(title: String, value: String, unit: String) -> some View {
+    private func statCard(title: String, value: String, unit: String, cardinal: Bool = false) -> some View {
         VStack(spacing: 4) {
             Text(title)
                 .font(.saltyLabel(DesignConstants.Typography.statLabelSize, weight: .semibold))
                 .foregroundColor(.saltyBlue)
             
-            HStack(alignment: .lastTextBaseline, spacing: 2) {
-                Text(value)
-                    .font(.saltyDisplay(DesignConstants.Typography.statValueSize, weight: .bold))
-                    .foregroundColor(.saltyTextPrimary)
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
+            VStack(spacing: 2) {
+                HStack {
+                    if cardinal {
+                        Text(HeadingFormatter.cardinalDirection(for: locationManager.currentHeading))
+                            .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
+                            .foregroundColor(.saltyOrange)
+                        Spacer()
+
+                    }
+                   
+                    Text(value)
+                        .font(.saltyDisplay(DesignConstants.Typography.statValueSize, weight: .bold))
+                        .foregroundColor(.saltyTextPrimary)
+                        .monospacedDigit()
+                        .contentTransition(.numericText())
+                }
+                
                 
                 if !unit.isEmpty {
                     Text(unit)
@@ -311,7 +304,7 @@ struct MainDashboardView: View {
         .saltyCardStyle()
     }
     
-    private func landscapeStatRow(label: String, value: String, unit: String) -> some View {
+    private func landscapeStatRow(label: String, value: String, unit: String, cardinal: Bool = false) -> some View {
         HStack {
             Text(label)
                 .font(.saltyLabel(14, weight: .semibold))
@@ -320,12 +313,18 @@ struct MainDashboardView: View {
             Spacer()
             
             HStack(alignment: .lastTextBaseline, spacing: 4) {
+                
                 Text(value)
                     .font(.saltyDisplay(DesignConstants.Typography.landscapeStatSize, weight: .bold))
                     .foregroundColor(.saltyTextPrimary)
                     .monospacedDigit()
                     .contentTransition(.numericText())
-                
+                if cardinal {
+                    Text(HeadingFormatter.cardinalDirection(for: locationManager.currentHeading))
+                        .font(.saltyLabel(DesignConstants.Typography.headingLabelSize, weight: .bold))
+                        .foregroundColor(.saltyOrange)
+
+                }
                 if !unit.isEmpty {
                     Text(unit)
                         .font(.saltyLabel(12, weight: .medium))
@@ -394,3 +393,4 @@ extension MainDashboardView {
     )
     .previewInterfaceOrientation(.landscapeLeft)
 }
+

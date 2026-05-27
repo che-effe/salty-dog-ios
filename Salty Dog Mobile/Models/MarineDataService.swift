@@ -252,7 +252,7 @@ class MarineDataService: ObservableObject {
     
     /// Fetch water temperature from StormGlass
     private func fetchStormGlassWaterTemp(for location: CLLocation) async throws -> Double {
-        guard let apiKey = stormGlassAPIKey else {
+        guard let apiKey = Bundle.main.infoDictionary?["STORMGLASS_API_KEY"] as? String else {
             throw MarineError.apiKeyMissing
         }
         

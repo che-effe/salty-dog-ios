@@ -60,7 +60,7 @@ struct DesignConstants {
     // Typography
     struct Typography {
         static let clockSize: CGFloat = 120
-        static let speedValueSize: CGFloat = 96
+        static let speedValueSize: CGFloat = 36
         static let speedUnitSize: CGFloat = 24
         static let headingValueSize: CGFloat = 36
         static let headingLabelSize: CGFloat = 18
@@ -93,6 +93,22 @@ struct SaltyCardStyle: ViewModifier {
 extension View {
     func saltyCardStyle() -> some View {
         modifier(SaltyCardStyle())
+    }
+}
+
+struct SaltyCardFullWidthStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(DesignConstants.cardPadding)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.saltyCardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+    }
+}
+
+extension View {
+    func saltyCardFullWidthStyle() -> some View {
+        modifier(SaltyCardFullWidthStyle())
     }
 }
 
