@@ -49,7 +49,8 @@ class MarineDataService: ObservableObject {
         if shouldSkipFetch(for: location) {
             return
         }
-        
+        let station = try? await findNearestNOAAStation(for: location)
+
         fetchTask?.cancel()
         isLoading = true
         error = nil
@@ -58,10 +59,10 @@ class MarineDataService: ObservableObject {
             // Try to get data from available sources
             var waterTemp: Double?
             var tideData: TideInfo?
-            
+
             // Attempt NOAA API for US locations
-            async let noaaTide = fetchNOAATideData(for: location)
-            async let noaaWaterTemp = fetchNOAAWaterTemperature(for: location)
+            async let noaaTide = fetchNOAATideData(for: station!)
+            async let noaaWaterTemp = fetchNOAAWaterTemperature(for: station!)
             
             // Await NOAA results
             tideData = try? await noaaTide
@@ -75,7 +76,7 @@ class MarineDataService: ObservableObject {
             if tideData == nil && stormGlassAPIKey != nil {
                 tideData = try? await fetchStormGlassTide(for: location)
             }
-            
+            print("STATION NAME:",station?.name as Any)
             // Build marine data from available information
             currentMarineData = MarineData(
                 waterTemperature: waterTemp,
@@ -85,8 +86,10 @@ class MarineDataService: ObservableObject {
                 nextLowTide: tideData?.nextLow,
                 waveHeight: nil, // Could be added with additional API
                 swellDirection: nil,
-                lastUpdated: Date()
+                lastUpdated: Date(),
+                stationName: station?.name
             )
+            
             
             lastFetchLocation = location
             isLoading = false
@@ -135,8 +138,7 @@ class MarineDataService: ObservableObject {
     }
     
     /// Fetch tide data from NOAA
-    private func fetchNOAATideData(for location: CLLocation) async throws -> TideInfo {
-        let station = try await findNearestNOAAStation(for: location)
+    private func fetchNOAATideData(for station: NOAAStation) async throws -> TideInfo {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
@@ -215,8 +217,7 @@ class MarineDataService: ObservableObject {
     }
     
     /// Fetch water temperature from NOAA
-    private func fetchNOAAWaterTemperature(for location: CLLocation) async throws -> Double {
-        let station = try await findNearestNOAAStation(for: location)
+    private func fetchNOAAWaterTemperature(for station: NOAAStation) async throws -> Double {
         
         var components = URLComponents(string: noaaBaseURL)!
         components.queryItems = [

@@ -53,6 +53,7 @@ struct MarineData: Equatable {
     let waveHeight: Double? // meters
     let swellDirection: Double? // degrees
     let lastUpdated: Date
+    let stationName: String?
     
     enum TideStatus: String, Equatable {
         case rising = "Rising"
@@ -70,7 +71,8 @@ struct MarineData: Equatable {
         nextLowTide: nil,
         waveHeight: nil,
         swellDirection: nil,
-        lastUpdated: Date()
+        lastUpdated: Date(),
+        stationName: ""
     )
 }
 
