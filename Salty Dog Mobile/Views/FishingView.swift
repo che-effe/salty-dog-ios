@@ -101,18 +101,22 @@ struct FishingView: View {
         VStack(spacing: 16) {
             HStack {
                 Text("Current Conditions")
-                    .font(.headline)
-                    .foregroundColor(.saltyTextPrimary)
-                
+                            .font(.headline)
+                            .foregroundColor(.saltyTextPrimary)
+                Text("-")
+                            .font(.headline)
+                            .foregroundColor(.saltyTextSecondary)
+                Text(marineService.currentMarineData.stationName!)
+                            .font(.headline)
+                            .foregroundColor(.saltyTextSecondary)
+               
                 Spacer()
                 if marineService.isLoading {
                     ProgressView()
                         .tint(.saltyBlue)
                 }
             }
-            Text(marineService.currentMarineData.stationName! )
-                .font(.caption)
-                .foregroundColor(.saltyTextSecondary)
+            
             HStack(spacing: 20) {
                 // Weather
                 conditionItem(
