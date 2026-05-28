@@ -45,7 +45,6 @@ struct FishingView: View {
                                 showHotspots: !fishingLogManager.logs.isEmpty
                             )
                             .frame(height: 300)
-                            .saltyCardStyle()
                             
                             // Hotspot Analysis (if available)
                             if let analysis = hotspotAnalyzer.analysis, !analysis.insights.isEmpty {
