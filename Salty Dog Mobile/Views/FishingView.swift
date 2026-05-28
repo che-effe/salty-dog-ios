@@ -7,10 +7,12 @@ struct FishingView: View {
     @ObservedObject var weatherManager: WeatherManager
     @StateObject private var fishingLogManager = FishingLogManager()
     @StateObject private var marineService = MarineDataService()
+    @StateObject private var hotspotAnalyzer = FishingHotspotAnalyzer()
     
     @State private var showMarkSpotSheet = false
     @State private var showLogDetail: FishingLog?
     @State private var showStatistics = false
+    @State private var showAnalysisDetails = false
     
     @AppStorage("fishWeightUnit") private var weightUnitRaw: String = WeightUnit.pounds.rawValue
     @AppStorage("fishLengthUnit") private var lengthUnitRaw: String = LengthUnit.inches.rawValue
@@ -32,6 +34,19 @@ struct FishingView: View {
                     VStack(spacing: DesignConstants.componentSpacing) {
                         // Current Conditions
                         conditionsCard
+                        
+                        // Fishing Map with Hotspots
+                        FishMapView(
+                            hotspots: hotspotAnalyzer.hotspots,
+                            userLocation: locationManager.currentCoordinate,
+                            showHotspots: !fishingLogManager.logs.isEmpty
+                        )
+                        .frame(height: 300)
+                        
+                        // Hotspot Analysis (if available)
+                        if let analysis = hotspotAnalyzer.analysis, !analysis.insights.isEmpty {
+                            hotspotAnalysisCard(analysis)
+                        }
                         
                         // Mark Spot Button
                         markSpotButton
@@ -92,7 +107,85 @@ struct FishingView: View {
                         await marineService.fetchMarineData(for: location)
                     }
                 }
+                
+                // Analyze hotspots based on current conditions
+                performHotspotAnalysis()
             }
+            .onChange(of: weatherManager.currentWeather) { _ in
+                performHotspotAnalysis()
+            }
+            .onChange(of: marineService.currentMarineData) { _ in
+                performHotspotAnalysis()
+            }
+        }
+    }
+    
+    // MARK: - Hotspot Analysis
+    
+    private func performHotspotAnalysis() {
+        guard !fishingLogManager.logs.isEmpty,
+              let coordinate = locationManager.currentCoordinate else {
+            return
+        }
+        
+        let centerCoordinate = CLLocationCoordinate2D(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude
+        )
+        
+        hotspotAnalyzer.analyzeForHotspots(
+            logs: fishingLogManager.logs,
+            currentWeather: weatherManager.currentWeather,
+            currentMarine: marineService.currentMarineData,
+            center: centerCoordinate,
+            radius: 50
+        )
+    }
+    
+    private func hotspotAnalysisCard(_ analysis: HotspotAnalysis) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("🎣 Fishing Outlook")
+                        .font(.headline)
+                        .foregroundColor(.saltyTextPrimary)
+                    
+                    Text("Conditions: " + analysis.conditionSummary)
+                        .font(.caption)
+                        .foregroundColor(.saltyTextSecondary)
+                }
+                Spacer()
+                Button(action: { showAnalysisDetails = true }) {
+                    Image(systemName: "info.circle.fill")
+                        .foregroundColor(.saltyBlue)
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(analysis.insights.prefix(3), id: \.self) { insight in
+                    HStack(spacing: 8) {
+                        Text("•")
+                            .foregroundColor(.saltyBlue)
+                        Text(insight)
+                            .font(.caption)
+                            .foregroundColor(.saltyTextSecondary)
+                    }
+                }
+            }
+            
+            if hotspotAnalyzer.isAnalyzing {
+                HStack {
+                    ProgressView()
+                        .tint(.saltyBlue)
+                    Text("Analyzing conditions...")
+                        .font(.caption)
+                        .foregroundColor(.saltyTextSecondary)
+                }
+            }
+        }
+        .saltyCardStyle()
+        .sheet(isPresented: $showAnalysisDetails) {
+            HotspotAnalysisSheet(analysis: analysis)
         }
     }
     

@@ -14,23 +14,68 @@ extension CLLocationCoordinate2D: Hashable {
         hasher.combine(longitude)
     }
 }
-struct HeatmapOverlay: View {
-    let hotspots: [CLLocationCoordinate2D: Double] // coordinate: score
 
-    var body: some View {
-        ZStack {
-            ForEach(hotspots.sorted(by: { $0.value > $1.value }), id: \.key) { coord, score in
-                Circle()
-                    .fill(Color.red.opacity(min(0.7, max(0.1, score/20))))
-                    .frame(width: 40, height: 40)
-                    .position(/* convert coord to CGPoint on map */)
+// MARK: - Heatmap Overlay
+/// Displays fishing hotspots as visual overlays on the map
+struct HeatmapOverlay: MapContent {
+    let hotspots: [CLLocationCoordinate2D: Double] // coordinate: score (0-1)
+    let showLabels: Bool = false
+    
+    var body: some MapContent {
+        ForEach(Array(hotspots.sorted(by: { $0.value > $1.value }).enumerated()), id: \.offset) { index, item in
+            let (coord, score) = item
+            Annotation("", coordinate: coord) {
+                VStack(spacing: 4) {
+                    ZStack {
+                        Circle()
+                            .fill(colorForScore(score))
+                            .frame(width: sizeForScore(score), height: sizeForScore(score))
+                        
+                        Circle()
+                            .stroke(Color.white, lineWidth: 2)
+                            .frame(width: sizeForScore(score), height: sizeForScore(score))
+                    }
+                    
+                    if showLabels {
+                        Text(String(format: "%.0f%%", score * 100))
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(colorForScore(score))
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                    }
+                }
+                .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
             }
         }
+    }
+    
+    private func colorForScore(_ score: Double) -> Color {
+        // Red (low score) to Yellow to Green (high score)
+        if score > 0.75 {
+            return Color.green
+        } else if score > 0.6 {
+            return Color.yellow
+        } else if score > 0.45 {
+            return Color.orange
+        } else {
+            return Color.red.opacity(0.8)
+        }
+    }
+    
+    private func sizeForScore(_ score: Double) -> Double {
+        // Size ranges from 25 to 55 based on score
+        return 25 + (score * 30)
     }
 }
 /// Interactive map view displaying the GPS track with start/current position markers
 struct FishMapView: View {
     var showFullScreenButton: Bool = true
+    var hotspots: [CLLocationCoordinate2D: Double] = [:]
+    var userLocation: CLLocationCoordinate2D?
+    var showHotspots: Bool = true
     
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var showFullScreen = false
@@ -44,12 +89,23 @@ struct FishMapView: View {
             }
         }
         .fullScreenCover(isPresented: $showFullScreen) {
-            FullScreenFishMapView()
+            FullScreenFishMapView(hotspots: hotspots, userLocation: userLocation)
         }
     }
     
     private var mapView: some View {
         Map(position: $cameraPosition) {
+            // Show heatmap hotspots
+            if showHotspots && !hotspots.isEmpty {
+                HeatmapOverlay(hotspots: hotspots)
+            }
+            
+            // Show user location marker
+            if let userLoc = userLocation {
+                Annotation("", coordinate: userLoc) {
+                    currentPositionMarker
+                }
+            }
         }
         .mapStyle(.standard(elevation: .realistic))
         .mapControls {
@@ -104,9 +160,13 @@ struct FishMapView: View {
 /// Full screen map view with additional controls
 struct FullScreenFishMapView: View {
     
+    var hotspots: [CLLocationCoordinate2D: Double] = [:]
+    var userLocation: CLLocationCoordinate2D?
+    
     @Environment(\.dismiss) private var dismiss
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var mapStyle: MapStyleOption = .standard
+    @State private var showHotspots: Bool = true
     
     enum MapStyleOption: String, CaseIterable {
         case standard = "Standard"
@@ -117,7 +177,19 @@ struct FullScreenFishMapView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Map(position: $cameraPosition)
+                Map(position: $cameraPosition) {
+                    // Show heatmap hotspots
+                    if showHotspots && !hotspots.isEmpty {
+                        HeatmapOverlay(hotspots: hotspots)
+                    }
+                    
+                    // Show user location marker
+                    if let userLoc = userLocation {
+                        Annotation("Current Location", coordinate: userLoc) {
+                            currentPositionMarker
+                        }
+                    }
+                }
                 .mapStyle(currentMapStyle)
                 .mapControls {
                     MapCompass()
@@ -125,9 +197,30 @@ struct FullScreenFishMapView: View {
                     MapUserLocationButton()
                 }
                 
-                // Map style picker
+                // Map controls
                 VStack {
+                    HStack {
+                        if !hotspots.isEmpty {
+                            Button(action: { showHotspots.toggle() }) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: showHotspots ? "eye.fill" : "eye.slash.fill")
+                                    Text("Hotspots")
+                                        .font(.caption)
+                                }
+                                .foregroundColor(.white)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(showHotspots ? Color.saltyBlue : Color.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                            }
+                        }
+                        Spacer()
+                    }
+                    .padding(12)
+                    
                     Spacer()
+                    
+                    // Map style picker
                     mapStylePicker
                         .padding(.bottom, 16)
                 }
