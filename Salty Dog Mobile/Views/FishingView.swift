@@ -13,9 +13,11 @@ struct FishingView: View {
     @State private var showLogDetail: FishingLog?
     @State private var showStatistics = false
     @State private var showAnalysisDetails = false
+    @State private var showProAnglerSheet = false
     
     @AppStorage("fishWeightUnit") private var weightUnitRaw: String = WeightUnit.pounds.rawValue
     @AppStorage("fishLengthUnit") private var lengthUnitRaw: String = LengthUnit.inches.rawValue
+    @AppStorage("hasProAnglerSubscription") private var hasProAngler: Bool = false
     
     private var weightUnit: WeightUnit {
         WeightUnit(rawValue: weightUnitRaw) ?? .pounds
@@ -35,17 +37,23 @@ struct FishingView: View {
                         // Current Conditions
                         conditionsCard
                         
-                        // Fishing Map with Hotspots
-                        FishMapView(
-                            hotspots: hotspotAnalyzer.hotspots,
-                            userLocation: locationManager.currentCoordinate,
-                            showHotspots: !fishingLogManager.logs.isEmpty
-                        )
-                        .frame(height: 300)
-                        
-                        // Hotspot Analysis (if available)
-                        if let analysis = hotspotAnalyzer.analysis, !analysis.insights.isEmpty {
-                            hotspotAnalysisCard(analysis)
+                        // Fishing Map with Hotspots - ProAngler Feature
+                        if hasProAngler {
+                            FishMapView(
+                                hotspots: hotspotAnalyzer.hotspots,
+                                userLocation: locationManager.currentCoordinate,
+                                showHotspots: !fishingLogManager.logs.isEmpty
+                            )
+                            .frame(height: 300)
+                            .saltyCardStyle()
+                            
+                            // Hotspot Analysis (if available)
+                            if let analysis = hotspotAnalyzer.analysis, !analysis.insights.isEmpty {
+                                hotspotAnalysisCard(analysis)
+                            }
+                        } else {
+                            // Upgrade Callout Card
+                            proAnglerUpgradeCard
                         }
                         
                         // Mark Spot Button
@@ -99,6 +107,9 @@ struct FishingView: View {
                     weightUnit: weightUnit,
                     lengthUnit: lengthUnit
                 )
+            }
+            .sheet(isPresented: $showProAnglerSheet) {
+                ProAnglerSubscriptionSheet(isSubscribed: $hasProAngler)
             }
             .onAppear {
                 if let coordinate = locationManager.currentCoordinate {
@@ -186,6 +197,72 @@ struct FishingView: View {
         .saltyCardStyle()
         .sheet(isPresented: $showAnalysisDetails) {
             HotspotAnalysisSheet(analysis: analysis)
+        }
+    }
+    
+    private var proAnglerUpgradeCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("🎣 ProAngler Features")
+                        .font(.headline)
+                        .foregroundColor(.saltyTextPrimary)
+                    
+                    Text("Unlock AI-powered fishing hotspots and real-time condition analysis to find the best spots")
+                        .font(.caption)
+                        .foregroundColor(.saltyTextSecondary)
+                        .lineLimit(4)
+                }
+                Spacer()
+                Image(systemName: "lock.fill")
+                    .font(.title3)
+                    .foregroundColor(.saltyBlue)
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                featureRow(icon: "map.fill", text: "Gradient heatmap overlay")
+                featureRow(icon: "chart.line.uptrend.xyaxis", text: "Condition matching analysis")
+                featureRow(icon: "sparkles", text: "Personalized fishing insights")
+                featureRow(icon: "location.fill", text: "Top location rankings")
+            }
+            
+            Button(action: { showProAnglerSheet = true }) {
+                HStack {
+                    Image(systemName: "crown.fill")
+                    Text("Upgrade to ProAngler")
+                        .font(.headline)
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(
+                    LinearGradient(
+                        colors: [.saltyBlue, .saltyBlue.opacity(0.7)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+            }
+        }
+        .padding(12)
+        .background(Color.saltyBlue.opacity(0.08))
+        .border(Color.saltyBlue.opacity(0.3), width: 1)
+        .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+    }
+    
+    private func featureRow(icon: String, text: String) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.caption)
+                .foregroundColor(.saltyBlue)
+                .frame(width: 16)
+            
+            Text(text)
+                .font(.caption)
+                .foregroundColor(.saltyTextSecondary)
+            
+            Spacer()
         }
     }
     

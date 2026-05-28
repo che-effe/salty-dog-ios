@@ -16,60 +16,153 @@ extension CLLocationCoordinate2D: Hashable {
 }
 
 // MARK: - Heatmap Overlay
-/// Displays fishing hotspots as visual overlays on the map
+/// Displays a gradient heatmap overlay indicating fishing potential across water areas
 struct HeatmapOverlay: MapContent {
     let hotspots: [CLLocationCoordinate2D: Double] // coordinate: score (0-1)
     let showLabels: Bool = false
     
+    // Grid resolution for heatmap interpolation (in degrees)
+    private let gridStep: Double = 0.005 // ~500m grid
+    
     var body: some MapContent {
-        ForEach(Array(hotspots.sorted(by: { $0.value > $1.value }).enumerated()), id: \.offset) { index, item in
-            let (coord, score) = item
-            Annotation("", coordinate: coord) {
-                VStack(spacing: 4) {
-                    ZStack {
-                        Circle()
-                            .fill(colorForScore(score))
-                            .frame(width: sizeForScore(score), height: sizeForScore(score))
+        // Generate a gradient grid from hotspots
+        let gridPoints = generateHeatmapGrid()
+        
+        ForEach(Array(gridPoints.enumerated()), id: \.offset) { index, point in
+            if point.score > 0.25 { // Only show meaningful scores
+                Annotation("", coordinate: point.coordinate) {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(gradientColorForScore(point.score))
+                        .frame(width: 12, height: 12)
+                        .opacity(0.6)
+                }
+            }
+        }
+        
+        // Show hotspot centers with labels if enabled
+        if showLabels {
+            ForEach(Array(hotspots.sorted(by: { $0.value > $1.value }).enumerated()), id: \.offset) { index, item in
+                let (coord, score) = item
+                Annotation("", coordinate: coord) {
+                    VStack(spacing: 4) {
+                        ZStack {
+                            Circle()
+                                .fill(gradientColorForScore(score))
+                                .frame(width: 20, height: 20)
+                            
+                            Circle()
+                                .stroke(Color.white, lineWidth: 2)
+                                .frame(width: 20, height: 20)
+                        }
                         
-                        Circle()
-                            .stroke(Color.white, lineWidth: 2)
-                            .frame(width: sizeForScore(score), height: sizeForScore(score))
-                    }
-                    
-                    if showLabels {
                         Text(String(format: "%.0f%%", score * 100))
                             .font(.caption2)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
-                            .background(colorForScore(score))
+                            .background(gradientColorForScore(score))
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
+                    .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
                 }
-                .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
             }
         }
     }
     
-    private func colorForScore(_ score: Double) -> Color {
-        // Red (low score) to Yellow to Green (high score)
-        if score > 0.75 {
-            return Color.green
-        } else if score > 0.6 {
-            return Color.yellow
-        } else if score > 0.45 {
-            return Color.orange
-        } else {
-            return Color.red.opacity(0.8)
+    /// Generate grid points with interpolated scores across the area
+    private func generateHeatmapGrid() -> [HeatmapGridPoint] {
+        guard !hotspots.isEmpty else { return [] }
+        
+        // Find bounds of hotspots
+        let lats = hotspots.keys.map { $0.latitude }
+        let lons = hotspots.keys.map { $0.longitude }
+        
+        guard let minLat = lats.min(), let maxLat = lats.max(),
+              let minLon = lons.min(), let maxLon = lons.max() else {
+            return []
         }
+        
+        // Expand bounds by 20% for smoother gradient edges
+        let latPadding = (maxLat - minLat) * 0.2
+        let lonPadding = (maxLon - minLon) * 0.2
+        
+        var gridPoints: [HeatmapGridPoint] = []
+        
+        // Generate grid
+        var lat = minLat - latPadding
+        while lat <= maxLat + latPadding {
+            var lon = minLon - lonPadding
+            while lon <= maxLon + lonPadding {
+                let gridCoord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                let interpolatedScore = interpolateScore(at: gridCoord)
+                gridPoints.append(HeatmapGridPoint(coordinate: gridCoord, score: interpolatedScore))
+                lon += gridStep
+            }
+            lat += gridStep
+        }
+        
+        return gridPoints
     }
     
-    private func sizeForScore(_ score: Double) -> Double {
-        // Size ranges from 25 to 55 based on score
-        return 25 + (score * 30)
+    /// Interpolate score at a given location based on nearby hotspots
+    private func interpolateScore(at coordinate: CLLocationCoordinate2D) -> Double {
+        guard !hotspots.isEmpty else { return 0 }
+        
+        // Calculate weighted average based on distance to hotspots
+        var totalWeight: Double = 0
+        var weightedScore: Double = 0
+        
+        for (hotspotCoord, score) in hotspots {
+            let distance = coordinate.distance(to: hotspotCoord)
+            
+            // Use inverse distance weighting with a falloff radius of 0.05 degrees (~5km)
+            let falloffRadius: Double = 0.05
+            let weight = max(0, 1.0 - (distance / falloffRadius))
+            
+            if weight > 0 {
+                totalWeight += weight
+                weightedScore += score * weight
+            }
+        }
+        
+        return totalWeight > 0 ? weightedScore / totalWeight : 0
+    }
+    
+    /// Get gradient color for score (red -> orange -> yellow -> green)
+    private func gradientColorForScore(_ score: Double) -> Color {
+        if score > 0.8 {
+            return Color.green
+        } else if score > 0.65 {
+            return Color(red: 0.5, green: 1.0, blue: 0) // Yellow-green
+        } else if score > 0.5 {
+            return Color.yellow
+        } else if score > 0.35 {
+            return Color.orange
+        } else if score > 0.25 {
+            return Color(red: 1.0, green: 0.5, blue: 0) // Orange-red
+        } else {
+            return Color.red.opacity(0.7)
+        }
     }
 }
+
+// MARK: - Heatmap Grid Point
+struct HeatmapGridPoint {
+    let coordinate: CLLocationCoordinate2D
+    let score: Double
+}
+
+// MARK: - Coordinate Distance Extension
+extension CLLocationCoordinate2D {
+    /// Calculate distance in degrees between two coordinates
+    func distance(to other: CLLocationCoordinate2D) -> Double {
+        let latDiff = (latitude - other.latitude) * (latitude - other.latitude)
+        let lonDiff = (longitude - other.longitude) * (longitude - other.longitude)
+        return sqrt(latDiff + lonDiff)
+    }
+}
+
 /// Interactive map view displaying the GPS track with start/current position markers
 struct FishMapView: View {
     var showFullScreenButton: Bool = true
