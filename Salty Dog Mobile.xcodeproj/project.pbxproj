@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		13AB0CFE2FC8E64F00288777 /* ArcGIS in Frameworks */ = {isa = PBXBuildFile; productRef = 13AB0CFD2FC8E64F00288777 /* ArcGIS */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2C803C302F4D54B700CC7563 /* Salty Dog Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salty Dog Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AB0CFE2FC8E64F00288777 /* ArcGIS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = "Salty Dog Mobile";
 			packageProductDependencies = (
+				13AB0CFD2FC8E64F00288777 /* ArcGIS */,
 			);
 			productName = "Salty Dog Mobile";
 			productReference = 2C803C302F4D54B700CC7563 /* Salty Dog Mobile.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 2C803C272F4D54B700CC7563;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				13AB0CFC2FC8E64F00288777 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2C803C312F4D54B700CC7563 /* Products */;
 			projectDirPath = "";
@@ -365,6 +374,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		13AB0CFC2FC8E64F00288777 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Esri/arcgis-maps-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 300.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		13AB0CFD2FC8E64F00288777 /* ArcGIS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13AB0CFC2FC8E64F00288777 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */;
+			productName = ArcGIS;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2C803C282F4D54B700CC7563 /* Project object */;
 }

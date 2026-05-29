@@ -55,12 +55,12 @@ struct DesignConstants {
     static let waveAnimationDuration: Double = 2.0
     
     // Direction indicator
-    static let directionIndicatorSize: CGSize = CGSize(width: 120, height: 120)
+    static let directionIndicatorSize: CGSize = CGSize(width: 110, height: 110)
     
     // Typography
     struct Typography {
-        static let clockSize: CGFloat = 120
-        static let speedValueSize: CGFloat = 36
+        static let clockSize: CGFloat = 80
+        static let speedValueSize: CGFloat = 120
         static let speedUnitSize: CGFloat = 24
         static let headingValueSize: CGFloat = 36
         static let headingLabelSize: CGFloat = 18

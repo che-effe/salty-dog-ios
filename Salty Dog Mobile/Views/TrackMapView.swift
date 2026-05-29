@@ -1,6 +1,5 @@
 import SwiftUI
 import MapKit
-
 /// Interactive map view displaying the GPS track with start/current position markers
 struct TrackMapView: View {
     let trackPoints: [CLLocationCoordinate2D]

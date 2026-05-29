@@ -124,7 +124,6 @@ struct MainDashboardView: View {
                     title: "HEADING",
                     value: displayHeading,
                     unit: speedUnit.distanceLabel,
-                    cardinal: true
                 )
                     
             }
@@ -133,8 +132,7 @@ struct MainDashboardView: View {
             // Stats summary row
             statsSummary
                 .padding(.horizontal, DesignConstants.screenPadding)
-            
-            Spacer()
+            trackMapSection
             
             .safeAreaInset(edge: .bottom){
                 // Wave animation at bottom
@@ -160,33 +158,35 @@ struct MainDashboardView: View {
                 .frame(height: DesignConstants.waveHeight)
         }
        
-
-        HStack(spacing: 24) {
+        HStack(spacing: 16) {
             // Left side: Speed display
-            VStack {
+            VStack(spacing: 16) {
                 Spacer()
+                Spacer()
+                clockDisplay
                 landscapeSpeedDisplay
-                Spacer()
                 
             }
-            .frame(width: geometry.size.width * 0.4)
+            .frame(width: geometry.size.width * 0.3)
             
             // Right side: Stats and heading
             VStack(spacing: 16) {
                 Spacer()
+                Spacer()
+
                 // Stats stack
                 landscapeStatRow(label: "TOP", value: displayTopSpeed, unit: speedUnit.rawValue)
                 landscapeStatRow(label: "DISTANCE", value: displayDistance, unit: speedUnit.distanceLabel)
-                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "", cardinal:true)
+                landscapeStatRow(label: "HEADING", value: displayHeading, unit: "")
                 landscapeStatRow(label: "DURATION", value: DurationFormatter.format(locationManager.sessionDuration), unit: "")
-                
-                Spacer()
             }
-            .frame(maxWidth: .infinity)
-            
+            .frame(width: geometry.size.width * 0.3)
+
             // Far right: Direction indicator
             directionIndicator
-                .padding(.trailing, 16)
+                .scaledToFill()
+                .frame(width: geometry.size.width * 0.3)
+
         }
        
     }
@@ -226,7 +226,12 @@ struct MainDashboardView: View {
         .frame(maxWidth: .infinity, alignment: .center)
         .saltyCardFullWidthStyle()
     }
-    
+    private var trackMapSection: some View {
+        TrackMapView(trackPoints: locationManager.trackCoordinates)
+            .frame(height: 180)
+            .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+            .padding(.horizontal, DesignConstants.screenPadding)
+    }
     private var landscapeSpeedDisplay: some View {
         VStack(spacing: 8) {
             Text(displaySpeed)
