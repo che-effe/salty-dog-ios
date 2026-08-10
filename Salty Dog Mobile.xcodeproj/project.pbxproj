@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		135A12DD2FD21B3E0077BEA0 /* proAngler.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 135A12DC2FD21B3E0077BEA0 /* proAngler.storekit */; };
 		13AB0CFE2FC8E64F00288777 /* ArcGIS in Frameworks */ = {isa = PBXBuildFile; productRef = 13AB0CFD2FC8E64F00288777 /* ArcGIS */; };
+		13AB0D012FC9F7BA00288777 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 13AB0D002FC9F7BA00288777 /* RevenueCat */; };
+		13AB0D032FC9F7BA00288777 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13AB0D022FC9F7BA00288777 /* RevenueCatUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		135A12DC2FD21B3E0077BEA0 /* proAngler.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = proAngler.storekit; sourceTree = "<group>"; };
 		2C803C302F4D54B700CC7563 /* Salty Dog Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salty Dog Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -40,7 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AB0D012FC9F7BA00288777 /* RevenueCat in Frameworks */,
 				13AB0CFE2FC8E64F00288777 /* ArcGIS in Frameworks */,
+				13AB0D032FC9F7BA00288777 /* RevenueCatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +56,7 @@
 		2C803C272F4D54B700CC7563 = {
 			isa = PBXGroup;
 			children = (
+				135A12DC2FD21B3E0077BEA0 /* proAngler.storekit */,
 				2C803C322F4D54B700CC7563 /* Salty Dog Mobile */,
 				2C803C312F4D54B700CC7563 /* Products */,
 			);
@@ -84,6 +91,8 @@
 			name = "Salty Dog Mobile";
 			packageProductDependencies = (
 				13AB0CFD2FC8E64F00288777 /* ArcGIS */,
+				13AB0D002FC9F7BA00288777 /* RevenueCat */,
+				13AB0D022FC9F7BA00288777 /* RevenueCatUI */,
 			);
 			productName = "Salty Dog Mobile";
 			productReference = 2C803C302F4D54B700CC7563 /* Salty Dog Mobile.app */;
@@ -115,6 +124,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				13AB0CFC2FC8E64F00288777 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */,
+				13AB0CFF2FC9F7BA00288777 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2C803C312F4D54B700CC7563 /* Products */;
@@ -131,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135A12DD2FD21B3E0077BEA0 /* proAngler.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +395,14 @@
 				minimumVersion = 300.0.0;
 			};
 		};
+		13AB0CFF2FC9F7BA00288777 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.75.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -391,6 +410,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 13AB0CFC2FC8E64F00288777 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */;
 			productName = ArcGIS;
+		};
+		13AB0D002FC9F7BA00288777 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13AB0CFF2FC9F7BA00288777 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		13AB0D022FC9F7BA00288777 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13AB0CFF2FC9F7BA00288777 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

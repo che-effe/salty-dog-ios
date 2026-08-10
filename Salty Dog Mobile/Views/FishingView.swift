@@ -121,10 +121,10 @@ struct FishingView: View {
                 // Analyze hotspots based on current conditions
                 performHotspotAnalysis()
             }
-            .onChange(of: weatherManager.currentWeather) { _ in
+            .onChange(of: weatherManager.currentWeather) {
                 performHotspotAnalysis()
             }
-            .onChange(of: marineService.currentMarineData) { _ in
+            .onChange(of: marineService.currentMarineData) {
                 performHotspotAnalysis()
             }
         }

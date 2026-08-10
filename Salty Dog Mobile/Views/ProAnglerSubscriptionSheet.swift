@@ -1,4 +1,8 @@
 import SwiftUI
+import RevenueCat
+import StoreKit
+
+let productIds = ["SD_Pro_angler_monthly", "SD_Pro_angler"]
 
 // MARK: - ProAngler Subscription Sheet
 /// Subscription management sheet for ProAngler features
@@ -6,8 +10,12 @@ struct ProAnglerSubscriptionSheet: View {
     @Environment(\.dismiss) private var dismiss
     
     @Binding var isSubscribed: Bool
-    
+    let productIds = ["pro_monthly", "pro_yearly", "pro_lifetime"]
+
+    private var products: [Product] = []
     var body: some View {
+        
+
         NavigationStack {
             ZStack {
                 Color.saltyBackground.ignoresSafeArea()
@@ -90,7 +98,7 @@ struct ProAnglerSubscriptionSheet: View {
                             
                             pricingOption(
                                 period: "Annual",
-                                price: "$39.99",
+                                price: "$44.99",
                                 description: "per year (save 33%)",
                                 isRecommended: true
                             )
@@ -235,7 +243,16 @@ struct ProAnglerSubscriptionSheet: View {
         dismiss()
     }
 }
-
+func checkEntitlement() async {
+    do {
+        let customerInfo = try await Purchases.shared.customerInfo()
+        if customerInfo.entitlements.all["SaltyDog Pro"]?.isActive == true {
+            // User has access to entitlement
+        }
+    } catch {
+        print("Error: \(error)")
+    }
+}
 #Preview {
     ProAnglerSubscriptionSheet(isSubscribed: .constant(false))
 }
