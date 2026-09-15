@@ -2,17 +2,22 @@ import SwiftUI
 import RevenueCat
 import StoreKit
 
-let productIds = ["SD_Pro_angler_monthly", "SD_Pro_angler"]
-
 // MARK: - ProAngler Subscription Sheet
 /// Subscription management sheet for ProAngler features
 struct ProAnglerSubscriptionSheet: View {
     @Environment(\.dismiss) private var dismiss
     
     @Binding var isSubscribed: Bool
-    let productIds = ["pro_monthly", "pro_yearly", "pro_lifetime"]
 
-    private var products: [Product] = []
+    init(isSubscribed: Binding<Bool>) {
+        self._isSubscribed = isSubscribed
+    }
+
+    @State private var offering: Offering?
+    @State private var isPurchasing: Bool = false
+    @State private var purchaseError: String?
+    @State private var showErrorAlert: Bool = false
+
     var body: some View {
         
 
@@ -89,19 +94,24 @@ struct ProAnglerSubscriptionSheet: View {
                             Text("Pricing")
                                 .font(.headline)
                                 .foregroundColor(.saltyTextPrimary)
-                            
-                            pricingOption(
-                                period: "Monthly",
-                                price: "$4.99",
-                                description: "per month, cancel anytime"
-                            )
-                            
-                            pricingOption(
-                                period: "Annual",
-                                price: "$44.99",
-                                description: "per year (save 33%)",
-                                isRecommended: true
-                            )
+
+                            if let offering {
+                                ForEach(offering.availablePackages.sorted(by: sortPackages(_:_:)), id: \.identifier) { pkg in
+                                    pricingOption(
+                                        period: periodLabel(for: pkg),
+                                        price: pkg.storeProduct.localizedPriceString,
+                                        description: packageDescription(for: pkg, base: priceDescription(for: pkg)),
+                                        isRecommended: offering.annual?.identifier == pkg.identifier
+                                    )
+                                }
+                            } else {
+                                HStack(spacing: 12) {
+                                    ProgressView()
+                                    Text("Loading prices…")
+                                        .font(.subheadline)
+                                        .foregroundColor(.saltyTextSecondary)
+                                }
+                            }
                         }
                         .saltyCardStyle()
                         
@@ -124,6 +134,7 @@ struct ProAnglerSubscriptionSheet: View {
                                     )
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+                                .disabled(isPurchasing)
                             }
                             
                             Button(action: { dismiss() }) {
@@ -134,6 +145,14 @@ struct ProAnglerSubscriptionSheet: View {
                                     .padding(.vertical, 12)
                                     .background(Color.saltyBlue.opacity(0.08))
                                     .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+                            }
+                            
+                            Button(action: restorePurchases) {
+                                Text("Restore Purchases")
+                                    .font(.subheadline)
+                                    .foregroundColor(.saltyTextSecondary)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
                             }
                         }
                         
@@ -162,6 +181,12 @@ struct ProAnglerSubscriptionSheet: View {
                     }
                     .foregroundColor(.saltyBlue)
                 }
+            }
+            .task { loadOffering() }
+            .alert("Purchase Error", isPresented: $showErrorAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(purchaseError ?? "Unknown error")
             }
         }
     }
@@ -235,12 +260,130 @@ struct ProAnglerSubscriptionSheet: View {
         .border(isRecommended ? Color.saltyBlue.opacity(0.5) : Color.clear, width: 1)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+
+    private func periodLabel(for package: Package) -> String {
+        if let period = package.storeProduct.subscriptionPeriod {
+            switch period.unit {
+            case .day: return "Daily"
+            case .week: return "Weekly"
+            case .month: return "Monthly"
+            case .year: return "Annual"
+            @unknown default: return "Subscription"
+            }
+        } else {
+            return "Lifetime"
+        }
+    }
+
+    private func priceDescription(for package: Package) -> String {
+        if package.storeProduct.subscriptionPeriod != nil {
+            return "cancel anytime"
+        } else {
+            return "one-time purchase"
+        }
+    }
     
+    private func packageDescription(for package: Package, base: String) -> String {
+        var desc: String
+        if let period = package.storeProduct.subscriptionPeriod {
+            switch period.unit {
+            case .day: desc = "per day, \(base)"
+            case .week: desc = "per week, \(base)"
+            case .month: desc = "per month, \(base)"
+            case .year: desc = "per year, \(base)"
+            @unknown default: desc = base
+            }
+        } else {
+            desc = base
+        }
+        if package.storeProduct.introductoryDiscount != nil {
+            desc += " • Intro offer available"
+        }
+        return desc
+    }
+
+    private func sortPackages(_ a: Package, _ b: Package) -> Bool {
+        rank(for: a) < rank(for: b)
+    }
+
+    private func rank(for package: Package) -> Int {
+        if let unit = package.storeProduct.subscriptionPeriod?.unit {
+            switch unit {
+            case .year: return 0
+            case .month: return 1
+            case .week: return 2
+            case .day: return 3
+            @unknown default: return 10
+            }
+        }
+        // Non-subscription / lifetime at the end
+        return 9
+    }
+
     private func subscribeToProAngler() {
-        // TODO: Integrate with StoreKit 2 for actual purchases
-        // For now, activate the subscription
-        isSubscribed = true
-        dismiss()
+        guard let pkg =
+            offering?.annual ??
+            offering?.monthly ??
+            offering?.availablePackages.first
+        else {
+            purchaseError = "No products available."
+            showErrorAlert = true
+            return
+        }
+
+        isPurchasing = true
+        Task {
+            do {
+                let result = try await Purchases.shared.purchase(package: pkg)
+                if result.customerInfo.entitlements.all["SaltyDog Pro"]?.isActive == true {
+                    isSubscribed = true
+                    dismiss()
+                } else {
+                    purchaseError = "Purchase succeeded, but entitlement is not active."
+                    showErrorAlert = true
+                }
+            } catch {
+                let nsError = error as NSError
+                if nsError.domain == RCPurchasesErrorDomain,
+                   PurchasesErrorCode(rawValue: nsError.code) == .purchaseCancelledError {
+                    // User cancelled the purchase
+                } else {
+                    purchaseError = error.localizedDescription
+                    showErrorAlert = true
+                }
+            }
+            isPurchasing = false
+        }
+    }
+
+    private func restorePurchases() {
+        Task {
+            do {
+                let info = try await Purchases.shared.restorePurchases()
+                if info.entitlements.all["SaltyDog Pro"]?.isActive == true {
+                    isSubscribed = true
+                    dismiss()
+                } else {
+                    purchaseError = "No active purchases to restore."
+                    showErrorAlert = true
+                }
+            } catch {
+                purchaseError = error.localizedDescription
+                showErrorAlert = true
+            }
+        }
+    }
+
+    private func loadOffering() {
+        Task {
+            do {
+                let offerings = try await Purchases.shared.offerings()
+                offering = offerings.current
+            } catch {
+                purchaseError = "Failed to load products: \(error.localizedDescription)"
+                showErrorAlert = true
+            }
+        }
     }
 }
 func checkEntitlement() async {
@@ -256,3 +399,4 @@ func checkEntitlement() async {
 #Preview {
     ProAnglerSubscriptionSheet(isSubscribed: .constant(false))
 }
+

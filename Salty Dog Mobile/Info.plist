@@ -14,7 +14,10 @@
 	<array>
 		<string>location</string>
 	</array>
-	
+	<key>REVENUE_CAT_API_KEY</key>
+  		<string>test_FLSrPGhHGBBQWRuWGXxSyCJwzwW</string>
+	<key>STORMGLASS_API_KEY</key>
+  		<string>b6773d8e-53d3-11f1-b099-0242ac120004-b6773dfc-53d3-11f1-b099-0242ac120004</string>
 	<!-- Supported Orientations -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

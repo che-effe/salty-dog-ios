@@ -17,7 +17,8 @@ struct SaltyDogApp: App {
         )
     }
     init() {
-           Purchases.configure(withAPIKey: "test_FLSrPGhHGBBQWRuWGXxSyCJwzwW")
+        Purchases.logLevel = .info
+        Purchases.configure(withAPIKey: Constants.revenueCatAPIKey)
     }
     
     func checkEntitlement() async {
