@@ -344,8 +344,8 @@ struct ProAnglerSubscriptionSheet: View {
                 }
             } catch {
                 let nsError = error as NSError
-                if nsError.domain == RCPurchasesErrorDomain,
-                   PurchasesErrorCode(rawValue: nsError.code) == .purchaseCancelledError {
+                let isCancelled = (nsError.domain == SKErrorDomain && nsError.code == SKError.paymentCancelled.rawValue) || nsError.code == SKError.paymentCancelled.rawValue
+                if isCancelled {
                     // User cancelled the purchase
                 } else {
                     purchaseError = error.localizedDescription
