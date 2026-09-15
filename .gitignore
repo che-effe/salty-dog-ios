@@ -53,3 +53,5 @@ fastlane/test_output
 Network Trash Folder
 Temporary Items
 .apdisk
+# Explicitly ignore local secrets
+Salty Dog Mobile/Config/Secrets.xconfig
